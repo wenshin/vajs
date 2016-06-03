@@ -2,12 +2,10 @@
 
 const assert = require('assert');
 const vjs = require('../lib');
-const store = require('../lib/store');
 
 describe('require', function () {
   const emptyValues = ['', null, undefined, NaN, {}, [], new Set(), new Map()];
   const notEmptyValues = [0, false, 'string type', {key: 1}, [1], () => {}];
-  const RequireValidator = store.get('require');
 
   it('validate when required which is default', function () {
     const v = vjs.require();
@@ -15,11 +13,11 @@ describe('require', function () {
     for (let empty of emptyValues) {
       let result = v.validate(empty);
       if (empty === empty) {
-        assert.equal(result.value, empty, `result.value [${result.value}] must be equal to src value [${empty}]`);
+        assert.equal(result.value, empty);
       } else {
-        assert.notEqual(result.value, empty, `NaN must be not equal to src value [${empty}]`);
+        assert.notEqual(result.value, empty);
       }
-      assert.equal(result.message, new RequireValidator().getMessage(), `result.message must right`);
+      assert.equal(result.message, '请务必填写', `input ${empty}`);
       assert.ok(!result.isValid, `empty value <${empty}> must be invalid`);
     }
 

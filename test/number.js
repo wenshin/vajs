@@ -52,8 +52,8 @@ describe('Number', function () {
     for (let integer of integers) {
       let result = v.validate(integer);
       assert.ok(result.isValid, `integer input ${integer}`)
-      assert.equal(result.value, Number(integer), `integer input ${integer}`)
-      assert.equal(result.value, integer, `integer input ${integer}`)
+      assert.ok(result.value === integer, `${integer} strict equal to ${result.value}`)
+      assert.ok(result.transformed === Number(integer), `${integer} strict equal to ${result.value}`)
     }
 
     for (let float of floats) {
@@ -106,6 +106,21 @@ describe('Number', function () {
     v = vjs.number({max: 10, decimalPlace: 2});
     result = v.validate(10.333);
     assert.equal(result.message, '应为最大 10，精确到 2 位小数的数字')
+    assert.ok(!result.isValid);
+  });
+
+  it('should use config.message', function () {
+    let message = 'custom message';
+    let config = {max: 10, min: 1, decimalPlace: 2, message};
+    let v = vjs.number(config);
+    let result = v.validate(0);
+    assert.equal(result.message, message)
+    assert.ok(!result.isValid);
+
+    config.message = config => `${config.max} ${config.min} ${config.decimalPlace}`;
+    v = vjs.number(config);
+    result = v.validate(0);
+    assert.equal(result.message, config.message(config))
     assert.ok(!result.isValid);
   });
 });

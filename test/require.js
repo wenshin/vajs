@@ -27,7 +27,7 @@ describe('require', function () {
   });
 
   it('validate when not required', function () {
-    const v = vjs.noRequire();
+    const v = vjs.require(false);
 
     for (let empty of emptyValues) {
       assert.ok(v.validate(empty).isValid, `empty value <${empty}> must be valid`);

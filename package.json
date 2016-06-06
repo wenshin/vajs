@@ -1,6 +1,6 @@
 {
-  "name": "vjs",
-  "version": "0.1.0",
+  "name": "vajs",
+  "version": "0.0.4",
   "engines": {
     "node": ">=6.1.0"
   },

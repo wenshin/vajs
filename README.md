@@ -6,17 +6,15 @@ a common validator for javascript environment
 
 # Install
 
-    npm i --save vjs
+    npm i --save vajs
 
 # API
 
 ## Method
 
-`myapi(arg1[, arg2])`
+`vajs.v(configs)`
 
-- `arg1`: arg1.
-
-- `arg2`: arg2.
+- `cofnigs`: [Object|Array].
 
 # Usage
 

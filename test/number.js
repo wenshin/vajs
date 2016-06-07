@@ -123,4 +123,13 @@ describe('Number', function () {
     assert.equal(result.message, config.message(config))
     assert.ok(!result.isValid);
   });
+
+  it('validate intger alias', function () {
+    let message = 'custom message';
+    let config = {max: 10, min: 1, message};
+    let v = vjs.integer(config);
+    let result = v.validate('1.1');
+    assert.equal(result.message, message)
+    assert.ok(!result.isValid);
+  });
 });

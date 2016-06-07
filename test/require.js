@@ -37,4 +37,17 @@ describe('require', function () {
       assert.ok(v.validate(notEmpty).isValid, `not empty value <${notEmpty}> must be valid`);
     }
   });
+
+  it('validate with custom message', function () {
+    const message = 'custom message';
+    let v = vjs.require(true, message);
+    let result = v.validate('');
+    assert.equal(result.message, message);
+    assert.ok(!result.isValid);
+
+    v = vjs.require(message);
+    result = v.validate('');
+    assert.equal(result.message, message);
+    assert.ok(!result.isValid);
+  });
 });

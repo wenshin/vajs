@@ -24,18 +24,20 @@ describe('validator-map', function () {
   it('should valid fail', function () {
     let v = vjs.map({
       key1: vjs.number({max: 10, min: 1}),
-      key2: vjs.string({maxLength: 2})
+      key2: vjs.string({maxLength: 2}),
+      key3: vjs.v((value, extraData) => value && extraData.test)
     });
 
-    let target = {key1: '11', key2: 'abc'};
-    let result = v.validate(target);
+    let target = {key1: '11', key2: 'abc', key3: true};
+    let result = v.validate(target, {test: false});
     assert.deepStrictEqual(result, {
-      value: {key1: '11', key2: 'abc'},
-      transformed: {key1: 11, key2: 'abc'},
+      value: {key1: '11', key2: 'abc', key3: true},
+      transformed: {key1: 11, key2: 'abc', key3: true},
       isValid: false,
       message: {
         key1: '应为最小 1，最大 10 的数字',
-        key2: '应最多 2 个字符'
+        key2: '应最多 2 个字符',
+        key3: '验证失败'
       }
     });
   });

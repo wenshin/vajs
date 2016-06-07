@@ -27,5 +27,10 @@ describe('regexp', function () {
     let result = v.validate('ab');
     assert.equal(result.message, 'custom message');
     assert.ok(!result.isValid);
+
+    v = vjs.regexp('abc', 'custom message');
+    result = v.validate('ab');
+    assert.equal(result.message, 'custom message');
+    assert.ok(!result.isValid);
   });
 });

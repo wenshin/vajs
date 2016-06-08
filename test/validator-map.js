@@ -48,5 +48,13 @@ describe('validator-map', function () {
     });
     let transformed = v.transform({key1: '8'});
     assert.strictEqual(transformed.key1, 8);
+  });
+
+  it('transform number invalid', function () {
+    let v = vjs.map({
+      key1: vjs.number({max: 10, min: 1})
+    });
+    let transformed = v.transform({key1: 'abc'});
+    assert.strictEqual(transformed.key1, 'abc');
   })
 });

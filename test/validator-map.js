@@ -4,7 +4,7 @@ const assert = require('assert');
 const vjs = require('../lib');
 
 describe('validator-map', function () {
-  it('should valid success', function () {
+  it('validate success', function () {
     let target = {key1: '5'};
     let validator = vjs.number({max: 10, min: 1});
     let v;
@@ -21,7 +21,7 @@ describe('validator-map', function () {
     }
   });
 
-  it('should valid fail', function () {
+  it('validate fail', function () {
     let v = vjs.map({
       key1: vjs.number({max: 10, min: 1}),
       key2: vjs.string({maxLength: 2}),
@@ -41,4 +41,12 @@ describe('validator-map', function () {
       }
     });
   });
+
+  it('transform data', function () {
+    let v = vjs.map({
+      key1: vjs.number({max: 10, min: 1})
+    });
+    let transformed = v.transform({key1: '8'});
+    assert.strictEqual(transformed.key1, 8);
+  })
 });

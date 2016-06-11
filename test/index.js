@@ -1,23 +1,21 @@
-'use strict';
-
 const assert = require('assert');
-const vjs = require('../lib');
+const vajs = require('../lib');
 
 describe('vajs', function () {
   it('export validator classes', function () {
-    let v = vjs.v();
-    assert.ok(v instanceof vjs.ValidatorQueue, 'ValidatorQueue');
+    let v = vajs.v();
+    assert.ok(v instanceof vajs.ValidatorQueue, 'ValidatorQueue');
 
-    v = vjs.map({key: v});
-    assert.ok(v instanceof vjs.ValidatorMap, 'ValidatorQueue');
+    v = vajs.map({key: v});
+    assert.ok(v instanceof vajs.ValidatorMap, 'ValidatorQueue');
   });
 
   it('register fail when validator exist', function () {
-    assert.throws(() => vjs.register('custom', {}), /validator exist/)
+    assert.throws(() => vajs.register('custom', {}), /validator exist/)
   });
 
   it('register validator', function () {
-    class TestValidator extends vjs.Validator {
+    class TestValidator extends vajs.Validator {
       _getDefaultMessage() {
         return 'test message';
       }
@@ -27,9 +25,9 @@ describe('vajs', function () {
       }
     }
 
-    vjs.register('test', TestValidator);
+    vajs.register('test', TestValidator);
 
-    let v = vjs.v({type: 'test'});
+    let v = vajs.v({type: 'test'});
     let result = v.validate(2);
     assert.ok(result.isValid, 'pass');
 

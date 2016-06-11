@@ -1,14 +1,12 @@
-'use strict';
-
 const assert = require('assert');
-const vjs = require('../lib');
+const vajs = require('../lib');
 
 describe('require', function () {
   const emptyValues = ['', null, undefined, NaN, {}, [], new Set(), new Map()];
   const notEmptyValues = [0, false, 'string type', {key: 1}, [1], () => {}];
 
   it('validate when required which is default', function () {
-    const v = vjs.require();
+    const v = vajs.require();
 
     for (let empty of emptyValues) {
       let result = v.validate(empty);
@@ -17,8 +15,8 @@ describe('require', function () {
       } else {
         assert.notEqual(result.value, empty);
       }
-      assert.equal(result.message, '请务必填写', `input ${empty}`);
-      assert.ok(!result.isValid, `empty value <${empty}> must be invalid`);
+      assert.equal(result.message, '请务必填写', `input ${String(empty)}`);
+      assert.ok(!result.isValid, `empty value <${String(empty)}> must be invalid`);
     }
 
     for (let notEmpty of notEmptyValues) {
@@ -27,10 +25,10 @@ describe('require', function () {
   });
 
   it('validate when not required', function () {
-    const v = vjs.require(false);
+    const v = vajs.require(false);
 
     for (let empty of emptyValues) {
-      assert.ok(v.validate(empty).isValid, `empty value <${empty}> must be valid`);
+      assert.ok(v.validate(empty).isValid, `empty value <${String(empty)}> must be valid`);
     }
 
     for (let notEmpty of notEmptyValues) {
@@ -40,12 +38,12 @@ describe('require', function () {
 
   it('validate with custom message', function () {
     const message = 'custom message';
-    let v = vjs.require(true, message);
+    let v = vajs.require(true, message);
     let result = v.validate('');
     assert.equal(result.message, message);
     assert.ok(!result.isValid);
 
-    v = vjs.require(message);
+    v = vajs.require(message);
     result = v.validate('');
     assert.equal(result.message, message);
     assert.ok(!result.isValid);

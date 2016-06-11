@@ -54,4 +54,22 @@ describe('validator-map', function () {
     let transformed = v.transform({key1: 'abc'});
     assert.strictEqual(transformed.key1, 'abc');
   })
+
+  it('validate empty object', function () {
+    const v = vajs.map({
+      key1: vajs.number({max: 10, min: 1}),
+      key2: vajs.number({max: 10, min: 1})
+    });
+    const result = v.validate({});
+    assert.deepStrictEqual(result, new vajs.Result({
+      value: {},
+      transformed: {},
+      isValid: false,
+      message: {
+        key1: '请务必填写',
+        key2: '请务必填写'
+      }
+    }));
+    assert.ok(!result.isValid);
+  })
 });

@@ -60,17 +60,35 @@ describe('validator-map', function () {
       key1: vajs.number({max: 10, min: 1}),
       key2: vajs.number({max: 10, min: 1})
     });
-    const result = v.validate({});
-    assert.deepStrictEqual(result, new vajs.Result({
-      value: {},
-      transformed: {},
-      isValid: false,
-      message: {
-        key1: '请务必填写',
-        key2: '请务必填写'
-      }
-    }));
-    assert.ok(!result.isValid);
+
+    const emptyValues = [undefined, null, '', 0, NaN, {}]
+
+    for (const empty of emptyValues) {
+      const result = v.validate(empty);
+      assert.deepStrictEqual(result, new vajs.Result({
+        value: {},
+        transformed: {},
+        isValid: false,
+        message: {
+          key1: '请务必填写',
+          key2: '请务必填写'
+        }
+      }));
+      assert.ok(!result.isValid);
+    }
+  })
+
+  it('throw TypeError when validate not object', function () {
+    const v = vajs.map({
+      key1: vajs.number({max: 10, min: 1}),
+      key2: vajs.number({max: 10, min: 1})
+    });
+
+    const notObjectValues = ['abc', 10, [1, 2], () => {}, new Map(), new Set()]
+
+    for (const notObject of notObjectValues) {
+      assert.throws(() => {v.validate(notObject)}, TypeError)
+    }
   })
 
   it('validate undefined field', function () {

@@ -48,4 +48,12 @@ describe('require', function () {
     assert.equal(result.message, message);
     assert.ok(!result.isValid);
   });
+
+  it('config require in validator queue', function () {
+    const message = 'custom message';
+    let v = vajs.v([{require: false, message}, {type: 'number'}]);
+    let result = v.validate('');
+    assert.equal(result.message, message);
+    assert.ok(!result.isValid);
+  })
 });

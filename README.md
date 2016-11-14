@@ -24,6 +24,23 @@ a common validator for javascript environment
   4. `{type: RegExp, pattern: /abc/i, message: 'custom message'}`;
   5. `value => value === false`;
 
+  'message' can be a `String` or a `Function(config)`
+
+- `return`: [vajs.Validator].
+
+  ```javascript
+  const va = vajs.v({type: Number, min: 0, max: 2})
+  const result = va.validate(3);
+
+  // result is a instance of vajs.Result
+  // {
+  // 	 isValid: [Boolean], // true is valid ok
+  //	 message: [String], // fail message
+  //	 value: [AnyType], // the source value
+  //	 transformed: [AnyType], // the value transformed by validator. most for numbers
+  // }
+  ```
+
 👉**vajs.number(config|message)**
 
 - `config`: [Object]. the config of Number
@@ -53,11 +70,23 @@ if you want validate a object data, this is it.
   usages
 
   ```javascript
-  vajs.map({
-    foo: vajs.number({min: 1, max: 2, decimalPlace: 2}),
-    bar: vajs.string({minLength: 2, maxLength: 4})
-  })
+  const va = vajs.map({
+    foo: vajs.number({min: 1, max: 2, decimalPlace: 2, message: 'less than 2 and great than 1'}),
+    bar: vajs.string({minLength: 2, maxLength: 4, message: 'string length less than 4 and great than {}'})
+  });
+
+  const resultObj = va.validate({
+    foo: '3',
+    bar: 'foobar'
+  });
+
+  // {
+  //   foo: {isValid: false, message: 'some fail message', value: '3', transformed: 3},
+  //   bar: {isValid: false, message: 'some fail message'}
+  // }
   ```
+
+* `return`: [vajs.ValidatorMap].
 
 # Develop
 

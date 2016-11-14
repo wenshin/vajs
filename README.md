@@ -39,6 +39,19 @@ a common validator for javascript environment
   //	 value: [AnyType], // the source value
   //	 transformed: [AnyType], // the value transformed by validator. most for numbers
   // }
+
+  // custom validator of 0.0.8 version
+  const va = vajs.v((value) => {
+    if (false) return vajs.Result({
+      isValid: false, 
+      value: value, 
+      message: 'validate fail'
+    });
+    return true;
+  });
+
+  const result = va.validate(1);
+  // {isValid: true, message: 'validate fail'}
   ```
 
 👉**vajs.number(config|message)**
@@ -96,6 +109,13 @@ if you want validate a object data, this is it.
 
 # Release Note
 
-v0.0.7 2016-05-15
+**v0.0.8 2016-11-14**
 
-    * first version
+* the 'validate' property of custom validator, now can return a vajs.Result instance.
+
+
+
+**v0.0.7 2016-05-15**
+
+* first version
+

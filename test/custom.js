@@ -31,4 +31,41 @@ describe('custom', function () {
     assert.equal(result.message, 'custom message');
     assert.ok(!result.isValid);
   });
+
+  it('message can be a function and validate `this` is config object', function () {
+    let v = vajs.v({
+      type: 'custom',
+      validate(value, extraData) {
+        if (!(value && extraData.test)) {
+          this._message = 'this message';
+          return false;
+        }
+        return true;
+      },
+      message(config) {
+        return config._message;
+      }
+    });
+    let result = v.validate(true, {test: false});
+    assert.equal(result.message, 'this message');
+    assert.ok(!result.isValid);
+  });
+
+  it('validate can return a Result instance', function () {
+    let v = vajs.v({
+      type: 'custom',
+      validate(value, extraData) {
+        if (!(value && extraData.test)) {
+          return vajs.Result({
+            isValid: false,
+            message: 'result message'
+          });
+        }
+        return true;
+      }
+    });
+    let result = v.validate(true, {test: false});
+    assert.equal(result.message, 'result message');
+    assert.ok(!result.isValid);
+  });
 });

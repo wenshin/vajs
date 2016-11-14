@@ -1,4 +1,4 @@
-# vjs
+# vajs
 
 a common validator for javascript environment
 
@@ -10,13 +10,39 @@ a common validator for javascript environment
 
 # API
 
-## Method
+## Top Level
 
 `vajs.v(configs)`
 
-- `cofnigs`: [Object|Array].
+- `configs`: [Object|Array]
 
-# Usage
+config types:
+1. `{type: Number, min: 0, max: 2, decimalPlace: 2, message: 'custom message'}`;
+2. `{type: String, maxLength: 10, minLength: 2, message: 'custom message'}`;
+3. `{type: 'custom', validate: value => value, message: 'custom message'}`;
+4. `{type: RegExp, pattern: /abc/i, message: 'custom message'}`;
+4. `value => value === false`;
+
+`vajs.number(config|message)`
+
+- `config`: [Object]. the config of Nubmer
+- `message`: [String]. custom validate fail message
+
+`vajs.integer(config|message)`
+
+- `config`: [Object]. the config of Number but not decimalPlace
+- `message`: [String]. custom validate fail message
+
+`vajs.string(config|message)`
+
+- `config`: [Object]. the config of String
+- `message`: [String]. custom validate fail message
+
+`vajs.regexp(config, message)`
+- `config`: [Object|RegExp|String].
+if object is the config of RegExp validator.
+if RegExp or String is the config.type of RegExp validator.
+- `message`: [String]. custom validate fail message
 
 
 # Develop
@@ -27,6 +53,6 @@ a common validator for javascript environment
 
 # Release Note
 
-v0.1.0 2016-05-15
+v0.0.7 2016-05-15
 
     * first version

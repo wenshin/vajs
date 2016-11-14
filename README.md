@@ -109,7 +109,7 @@ if you want validate a object data, this is it.
 
 # Release Note
 
-**v0.0.8 2016-11-14**
+**v0.0.9 2016-11-14**
 
 * the 'validate' property of custom validator, now can return a vajs.Result instance.
 

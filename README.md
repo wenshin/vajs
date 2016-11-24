@@ -43,8 +43,8 @@ a common validator for javascript environment
   // custom validator of 0.0.8 version
   const va = vajs.v((value) => {
     if (false) return vajs.Result({
-      isValid: false, 
-      value: value, 
+      isValid: false,
+      value: value,
       message: 'validate fail'
     });
     return true;
@@ -108,6 +108,10 @@ if you want validate a object data, this is it.
     $> npm publish
 
 # Release Note
+
+**v0.0.10 2016-11-24**
+
+* fix ValidatorQueue.notRequire() validate fail bug
 
 **v0.0.9 2016-11-14**
 

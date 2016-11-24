@@ -31,4 +31,10 @@ describe('regexp', function () {
     assert.equal(result.message, 'custom message');
     assert.ok(!result.isValid);
   });
+
+  it('should test rigth when notRequire', function () {
+    let v = vajs.regexp({pattern: 'abc', message: 'custom message'}).notRequire();
+    result = v.validate();
+    assert.ok(result.isValid);
+  });
 });

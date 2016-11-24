@@ -130,4 +130,16 @@ describe('Number', function () {
     assert.equal(result.message, message)
     assert.ok(!result.isValid);
   });
+
+  it('should test number rigth when notRequire', function () {
+    let v = vajs.number().notRequire();
+    result = v.validate();
+    assert.ok(result.isValid);
+  });
+
+  it('should test integer rigth when notRequire', function () {
+    let v = vajs.integer().notRequire();
+    result = v.validate();
+    assert.ok(result.isValid);
+  });
 });

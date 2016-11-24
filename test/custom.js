@@ -68,4 +68,10 @@ describe('custom', function () {
     assert.equal(result.message, 'result message');
     assert.ok(!result.isValid);
   });
+
+  it('should test rigth when notRequire', function () {
+    const v = vajs.v(() => {}).notRequire();
+    const result = v.validate();
+    assert.ok(result.isValid);
+  });
 });

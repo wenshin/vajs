@@ -46,4 +46,11 @@ describe('string', function () {
     assert.equal(result.message, '应最少 2，最多 4 个字符', '中文长度为2');
     assert.ok(!result.isValid);
   });
+
+  it('should test rigth when notRequire', function () {
+    const v = vajs.string().notRequire();
+
+    result = v.validate();
+    assert.ok(result.isValid);
+  });
 });

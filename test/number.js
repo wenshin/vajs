@@ -4,7 +4,7 @@ const vajs = require('../lib');
 describe('Number', function () {
 
   it('should pass when valid input', function () {
-    const validInputs = [0, 1.1, 123e3, 123e-3, 0b11, 0x10, 0o10, Infinity];
+    const validInputs = ['1', ' 1 ', 0, 1.1, 123e3, 123e-3, 0b11, 0x10, 0o10, Infinity];
 
     const v = vajs.number();
 

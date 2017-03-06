@@ -2,7 +2,7 @@ const assert = require('assert');
 const vajs = require('../lib');
 
 describe('require', function () {
-  const emptyValues = ['', null, undefined, NaN, {}, [], new Set(), new Map()];
+  const emptyValues = ['', ' ', null, undefined, NaN, {}, [], new Set(), new Map()];
   const notEmptyValues = [0, false, 'string type', {key: 1}, [1], () => {}];
 
   it('validate when required which is default', function () {

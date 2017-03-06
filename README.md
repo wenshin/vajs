@@ -70,6 +70,7 @@ a common validator for javascript environment
 - `message`: [String]. custom validate fail message
 
 👉**vajs.regexp(config, message)**
+
 - `config`: [Object|RegExp|String].
   if object is the config of RegExp validator.
   if RegExp or String is the config.type of RegExp validator.
@@ -78,6 +79,7 @@ a common validator for javascript environment
 
 👉**vajs.map(config)**
 if you want validate a object data, this is it.
+
 * `config`: [Object]. a plain object of validators for the target object props
 
   usages
@@ -109,14 +111,19 @@ if you want validate a object data, this is it.
 
 # Release Note
 
+**v0.1.0 2017-03-06**
+
+* auto trim spaces before validate
+
+
 **v0.0.10 2016-11-24**
 
 * fix ValidatorQueue.notRequire() validate fail bug
 
+
 **v0.0.9 2016-11-14**
 
 * the 'validate' property of custom validator, now can return a vajs.Result instance.
-
 
 
 **v0.0.7 2016-05-15**

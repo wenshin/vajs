@@ -57,28 +57,35 @@ a common validator for javascript environment
 👉**vajs.number(config|message)**
 
 - `config`: [Object]. the config of Number
-- `message`: [String]. custom validate fail message
+- `message`: [String|Function]. A custom validate fail message or a function return fail message
 
 👉**vajs.integer(config|message)**
 
 - `config`: [Object]. the config of Number but not decimalPlace
-- `message`: [String]. custom validate fail message
+- `message`: [String|Function].
 
 👉**vajs.string(config|message)**
 
 - `config`: [Object]. the config of String
-- `message`: [String]. custom validate fail message
+- `message`: [String|Function].
 
 👉**vajs.regexp(config, message)**
 
 - `config`: [Object|RegExp|String].
   if object is the config of RegExp validator.
   if RegExp or String is the config.type of RegExp validator.
-- `message`: [String]. custom validate fail message
+- `message`: [String|Function].
 
+👉**vajs.async(config, message)**
+
+- `config`: [Functoin]. A function return a promise
+- `message`: [String|Function].
 
 👉**vajs.map(config)**
 if you want validate a object data, this is it.
+it has `validate` and `validateOne` api.
+considering the using scenes are complex,
+`vajs.map().validate` will ignore all async validation.
 
 * `config`: [Object]. a plain object of validators for the target object props
 

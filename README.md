@@ -80,12 +80,12 @@ a common validator for javascript environment
 
 - `config`: [Functoin]. A function return a promise
 - `message`: [String|Function].
+- `return`: [Result]. result object will have `pending == true` and `promise` property.
 
-👉**vajs.map(config)**
+👉**vajs.map(config, {onAsyncValidation})**
 if you want validate a object data, this is it.
 it has `validate` and `validateOne` api.
-considering the using scenes are complex,
-`vajs.map().validate` will ignore all async validation.
+`validate` method return a result will have a `results` property.
 
 * `config`: [Object]. a plain object of validators for the target object props
 
@@ -102,11 +102,18 @@ considering the using scenes are complex,
     bar: 'foobar'
   });
 
-  // {
-  //   foo: {isValid: false, message: 'some fail message', value: '3', transformed: 3},
-  //   bar: {isValid: false, message: 'some fail message'}
+  // vajs.Result {
+  //   isValid: false,
+  //   value: {foo: '3', bar: 'foobar'},
+  //   transformed: {foo: 3, bar: 'foobar'}
+  //   results: {
+  //     foo: [Result {isValid: false, message: 'some fail message', value: '3', transformed: 3}],
+  //     bar: [Result {isValid: false, message: 'some fail message'}]
+  //   },
   // }
   ```
+
+* `onAsyncValidation`: a function invoked when async validation finished. the argument is the result
 
 * `return`: [vajs.ValidatorMap].
 

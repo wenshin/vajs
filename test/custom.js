@@ -70,7 +70,7 @@ describe('custom', function () {
   });
 
   it('should test rigth when notRequire', function () {
-    const v = vajs.v(() => {}).notRequire();
+    const v = vajs.v(() => true).notRequire();
     const result = v.validate();
     assert.ok(result.isValid);
   });

@@ -11,13 +11,19 @@ describe('async', function () {
       });
     });
 
-    v.validate(6)
-      .then((validResult) => {
-        assert.ok(validResult.isValid);
+    const validResult = v.validate(6);
+    assert.ok(!validResult.isValid);
+    assert.ok(validResult.pending);
+
+    validResult
+      .promise
+      .then((result) => {
+        assert.ok(result.isValid);
         v.validate(3)
-          .catch((invalidResult) => {
-            assert.ok(!invalidResult.isValid);
-            assert.equal(invalidResult.message, INVALID_MESSAGE);
+          .promise
+          .catch((result) => {
+            assert.ok(!result.isValid);
+            assert.equal(result.message, INVALID_MESSAGE);
             done();
           });
       });
@@ -32,13 +38,19 @@ describe('async', function () {
       });
     });
 
-    v.validate(6)
-      .then((validResult) => {
-        assert.ok(validResult.isValid);
+    const validResult = v.validate(6);
+    assert.ok(!validResult.isValid);
+    assert.ok(validResult.pending);
+
+    validResult
+      .promise
+      .then((result) => {
+        assert.ok(result.isValid);
         v.validate(3)
-          .catch((invalidResult) => {
-            assert.ok(!invalidResult.isValid);
-            assert.equal(invalidResult.message, INVALID_MESSAGE);
+          .promise
+          .catch((result) => {
+            assert.ok(!result.isValid);
+            assert.equal(result.message, INVALID_MESSAGE);
             done();
           });
       });

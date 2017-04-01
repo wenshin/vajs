@@ -13,7 +13,12 @@ describe('validator-map', function () {
       assert.deepStrictEqual(result, new vajs.Result({
         value: {key1: '5'},
         transformed: {key1: 5},
-        message: {}
+        results: {
+          key1: new vajs.Result({
+            transformed: 5,
+            value: '5'
+          })
+        }
       }), `input ${config}`);
     }
   });
@@ -31,10 +36,25 @@ describe('validator-map', function () {
       value: {key1: '11', key2: 'abc', key3: true},
       transformed: {key1: 11, key2: 'abc', key3: true},
       isValid: false,
-      message: {
-        key1: '应为最小 1，最大 10 的数字',
-        key2: '应最多 2 个字符',
-        key3: '验证失败'
+      results: {
+        key1: new vajs.Result({
+          isValid: false,
+          message: '应为最小 1，最大 10 的数字',
+          value: '11',
+          transformed: 11
+        }),
+        key2: new vajs.Result({
+          isValid: false,
+          message: '应最多 2 个字符',
+          value: 'abc',
+          transformed: 'abc'
+        }),
+        key3: new vajs.Result({
+          isValid: false,
+          message: '验证失败',
+          value: true,
+          transformed: true
+        })
       }
     }));
   });
@@ -69,9 +89,15 @@ describe('validator-map', function () {
         value: {},
         transformed: {},
         isValid: false,
-        message: {
-          key1: '请务必填写',
-          key2: '请务必填写'
+        results: {
+          key1: new vajs.Result({
+            isValid: false,
+            message: '请务必填写'
+          }),
+          key2: new vajs.Result({
+            isValid: false,
+            message: '请务必填写'
+          })
         }
       }));
       assert.ok(!result.isValid);
@@ -101,9 +127,17 @@ describe('validator-map', function () {
       value: {key2: '11'},
       transformed: {key2: 11},
       isValid: false,
-      message: {
-        key1: '请务必填写',
-        key2: '应为最小 1，最大 10 的数字'
+      results: {
+        key1: new vajs.Result({
+          isValid: false,
+          message: '请务必填写'
+        }),
+        key2: new vajs.Result({
+          isValid: false,
+          message: '应为最小 1，最大 10 的数字',
+          value: '11',
+          transformed: 11
+        })
       }
     }));
     assert.ok(!result.isValid);

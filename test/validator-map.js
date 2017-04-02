@@ -10,15 +10,11 @@ describe('validator-map', function () {
     for (let config of [{key1: validator}, [['key1', validator]]]) {
       v = vajs.map(config);
       result = v.validate(target);
-      assert.deepStrictEqual(result, new vajs.Result({
-        value: {key1: '5'},
-        transformed: {key1: 5},
-        results: {
-          key1: new vajs.Result({
-            transformed: 5,
-            value: '5'
-          })
-        }
+      assert.deepStrictEqual(result, new vajs.MapResult({
+        key1: new vajs.Result({
+          transformed: 5,
+          value: '5'
+        })
       }), `input ${config}`);
     }
   });
@@ -32,30 +28,25 @@ describe('validator-map', function () {
 
     let target = {key1: '11', key2: 'abc', key3: true};
     let result = v.validate(target, {test: false});
-    assert.deepStrictEqual(result, new vajs.Result({
-      value: {key1: '11', key2: 'abc', key3: true},
-      transformed: {key1: 11, key2: 'abc', key3: true},
-      isValid: false,
-      results: {
-        key1: new vajs.Result({
-          isValid: false,
-          message: '应为最小 1，最大 10 的数字',
-          value: '11',
-          transformed: 11
-        }),
-        key2: new vajs.Result({
-          isValid: false,
-          message: '应最多 2 个字符',
-          value: 'abc',
-          transformed: 'abc'
-        }),
-        key3: new vajs.Result({
-          isValid: false,
-          message: '验证失败',
-          value: true,
-          transformed: true
-        })
-      }
+    assert.deepStrictEqual(result, new vajs.MapResult({
+      key1: new vajs.Result({
+        isValid: false,
+        message: '应为最小 1，最大 10 的数字',
+        value: '11',
+        transformed: 11
+      }),
+      key2: new vajs.Result({
+        isValid: false,
+        message: '应最多 2 个字符',
+        value: 'abc',
+        transformed: 'abc'
+      }),
+      key3: new vajs.Result({
+        isValid: false,
+        message: '验证失败',
+        value: true,
+        transformed: true
+      })
     }));
   });
 
@@ -85,20 +76,15 @@ describe('validator-map', function () {
 
     for (const empty of emptyValues) {
       const result = v.validate(empty);
-      assert.deepStrictEqual(result, new vajs.Result({
-        value: {},
-        transformed: {},
-        isValid: false,
-        results: {
-          key1: new vajs.Result({
-            isValid: false,
-            message: '请务必填写'
-          }),
-          key2: new vajs.Result({
-            isValid: false,
-            message: '请务必填写'
-          })
-        }
+      assert.deepStrictEqual(result, new vajs.MapResult({
+        key1: new vajs.Result({
+          isValid: false,
+          message: '请务必填写'
+        }),
+        key2: new vajs.Result({
+          isValid: false,
+          message: '请务必填写'
+        })
       }));
       assert.ok(!result.isValid);
     }
@@ -123,22 +109,17 @@ describe('validator-map', function () {
       key2: vajs.number({max: 10, min: 1})
     });
     const result = v.validate({key2: '11'});
-    assert.deepStrictEqual(result, new vajs.Result({
-      value: {key2: '11'},
-      transformed: {key2: 11},
-      isValid: false,
-      results: {
-        key1: new vajs.Result({
-          isValid: false,
-          message: '请务必填写'
-        }),
-        key2: new vajs.Result({
-          isValid: false,
-          message: '应为最小 1，最大 10 的数字',
-          value: '11',
-          transformed: 11
-        })
-      }
+    assert.deepStrictEqual(result, new vajs.MapResult({
+      key1: new vajs.Result({
+        isValid: false,
+        message: '请务必填写'
+      }),
+      key2: new vajs.Result({
+        isValid: false,
+        message: '应为最小 1，最大 10 的数字',
+        value: '11',
+        transformed: 11
+      })
     }));
     assert.ok(!result.isValid);
   })

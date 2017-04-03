@@ -76,11 +76,12 @@ a common validator for javascript environment
   if RegExp or String is the config.type of RegExp validator.
 - `message`: [String|Function].
 
-👉**vajs.async(config, message)**
+👉**vajs.async(promiseFactory, message)**
+async validator is a CustomValidator which will return a result with `pending` and `promise` property.
+NOTE: resolve the validation result even validation fail, and reject a Error instance when validation have a error.
 
-- `config`: [Functoin]. A function return a promise
+- `promiseFactory`: [Functoin]. A function return a promise
 - `message`: [String|Function].
-- `return`: [Result]. result object will have `pending == true` and `promise` property.
 
 👉**vajs.map(config, {onAsyncValidation})**
 if you want validate a object data, this is it.
@@ -102,7 +103,7 @@ it has `validate` and `validateOne` api.
     bar: 'foobar'
   });
 
-  // vajs.Result {
+  // vajs.MapResult {
   //   isValid: false,
   //   value: {foo: '3', bar: 'foobar'},
   //   transformed: {foo: 3, bar: 'foobar'}
@@ -124,6 +125,10 @@ it has `validate` and `validateOne` api.
     $> npm publish
 
 # Release Note
+**v1.0.0 2017-04-03**
+
+* add async validation.
+* ResultMap for `ValidatorMap.validate` method.
 
 **v0.1.0 2017-03-06**
 

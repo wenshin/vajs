@@ -14,9 +14,7 @@
   "directories": {
     "test": "test"
   },
-  "dependencies": {
-    "promiseallend": "^2.0.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "babel": "^6.5.2",
     "babel-cli": "^6.8.0",

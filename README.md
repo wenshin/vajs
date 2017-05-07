@@ -14,23 +14,37 @@ a common validator for javascript environment
 
 👉**vajs.v(configs)**
 
-- `configs`: [Object|Array]. A config object or config array
+create a validator of ValidatorQueue, which will run require validation first. If the target is not required, call `ValidatorQueue.prototype.notRequire` method.
 
-  config types:
+- `configs`: [Object|Array|Function].
+
+  **object config**
 
   1. `{type: Number, min: 0, max: 2, decimalPlace: 2, message: 'custom message'}`;
   2. `{type: String, maxLength: 10, minLength: 2, message: 'custom message'}`;
   3. `{type: 'custom', validate: value => value, message: 'custom message'}`;
   4. `{type: RegExp, pattern: /abc/i, message: 'custom message'}`;
-  5. `value => value === false`;
 
-  'message' can be a `String` or a `Function(config)`
+  message property is type of  String or Function. If is a function, it will get config as parameter.
 
-- `return`: [vajs.Validator].
+  *array config**, is the array of object config
 
   ```javascript
-  const va = vajs.v({type: Number, min: 0, max: 2})
-  const result = va.validate(3);
+  [
+    {type: Number, min: 0, max: 2, decimalPlace: 2, message: 'custom message'},
+    {type: RegExp, pattern: /abc/i, message: 'custom message'}
+  ]
+  ```
+
+  **function config**, a function receive value and extraData two parameter. the extraData is passed by `ValidatorQueue.prototype.validate` method
+
+- `return`: [vajs.Validator|vajs.ValidatorQueue].
+
+  ```javascript
+  let va = vajs.v({type: Number, min: 0, max: 2})
+
+  // return ValidatorQueue instance
+  const result = va.validate(3).notRequire();
 
   // result is a instance of vajs.Result
   // {
@@ -40,8 +54,8 @@ a common validator for javascript environment
   //	 transformed: [AnyType], // the value transformed by validator. most for numbers
   // }
 
-  // custom validator of 0.0.8 version
-  const va = vajs.v((value) => {
+  // return CustomValidator instance
+  va = vajs.v((value) => {
     if (false) return vajs.Result({
       isValid: false,
       value: value,
@@ -53,6 +67,13 @@ a common validator for javascript environment
   const result = va.validate(1);
   // {isValid: true, message: 'validate fail'}
   ```
+
+👉**vajs.custom(validate, message)**
+
+This alias is different to `vajs.v(configs)` receive a function, which will not run require validation by default.
+
+* `validate`: [Function], same with `vajs.v(functionConfig)`
+* `message`: [String|Function]
 
 👉**vajs.number(config|message)**
 
@@ -125,6 +146,12 @@ it has `validate` and `validateOne` api.
     $> npm publish
 
 # Release Note
+**v1.0.1 2017-05-07**
+
+* vajs.v() custom validation can return a vajs.MapResult instance.
+* add vajs.custom() to deal with the custom validation without auto require validation.
+
+
 **v1.0.0 2017-04-03**
 
 * add async validation.

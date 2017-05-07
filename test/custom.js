@@ -3,7 +3,7 @@
 const assert = require('assert');
 const vajs = require('../lib');
 
-describe('custom', function () {
+describe('vajs.v() custom validation', function () {
   it('should valid success', function () {
     let v = vajs.v((value, extraData) => value && extraData.test);
     let result = v.validate(true, {test: true});
@@ -69,9 +69,52 @@ describe('custom', function () {
     assert.ok(!result.isValid);
   });
 
-  it('should test rigth when notRequire', function () {
-    const v = vajs.v(() => true).notRequire();
+  it('validate can return a MapResult instance', function () {
+    let v = vajs.v({
+      type: 'custom',
+      validate(obj) {
+        return vajs.MapResult(
+          {
+            test: vajs.Result({
+              value: obj.test,
+              transformed: Number(obj.test),
+              isValid: false,
+              message: 'result message'
+            })
+          },
+          'map result fail'
+        );
+      }
+    });
+    let result = v.validate({test: '1'});
+    assert.ok(result instanceof vajs.MapResult);
+    assert.equal(result.value.test, '1');
+    assert.equal(result.transformed.test, 1);
+    assert.equal(result.message, 'map result fail');
+    assert.ok(!result.isValid);
+
+    // validate required error
+    result = v.validate();
+    assert.ok(result instanceof vajs.Result);
+    assert.equal(result.message, '请务必填写');
+    assert.ok(!result.isValid);
+  });
+
+  it('should test right when notRequire', function () {
+    const v = vajs.v(() => false).notRequire();
     const result = v.validate();
     assert.ok(result.isValid);
+  });
+});
+
+
+describe('vajs.custom(validate, message) custom validation', function () {
+  it('vajs.custom without require validation', function () {
+    const v = vajs.custom((v) => v, 'my message');
+    let result = v.validate(true);
+    assert.ok(result.isValid);
+    result = v.validate(false);
+    assert.ok(!result.isValid);
+    assert.equal(result.message, 'my message');
   });
 });

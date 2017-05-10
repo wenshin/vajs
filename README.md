@@ -68,13 +68,6 @@ create a validator of ValidatorQueue, which will run require validation first. I
   // {isValid: true, message: 'validate fail'}
   ```
 
-👉**vajs.custom(validate, message)**
-
-This alias is different to `vajs.v(configs)` receive a function, which will not run require validation by default.
-
-* `validate`: [Function], same with `vajs.v(functionConfig)`
-* `message`: [String|Function]
-
 👉**vajs.number(config|message)**
 
 - `config`: [Object]. the config of Number
@@ -97,9 +90,21 @@ This alias is different to `vajs.v(configs)` receive a function, which will not 
   if RegExp or String is the config.type of RegExp validator.
 - `message`: [String|Function].
 
+👉**vajs.custom(validate, message)**
+
+This alias is different to `vajs.v(configs)` receive a function
+> **NOTE**: it will not run require validation by default.
+
+* `validate`: [Function], same with `vajs.v(functionConfig)`
+* `message`: [String|Function]
+
 👉**vajs.async(promiseFactory, message)**
 async validator is a CustomValidator which will return a result with `pending` and `promise` property.
-NOTE: resolve the validation result even validation fail, and reject a Error instance when validation have a error.
+
+>**NOTE**:
+>
+>1. resolve the validation result even validation fail, and reject a Error instance when validation have a error.
+>2. it will not run require validation by default.
 
 - `promiseFactory`: [Functoin]. A function return a promise
 - `message`: [String|Function].
@@ -146,6 +151,12 @@ it has `validate` and `validateOne` api.
     $> npm publish
 
 # Release Note
+
+**v1.0.2 2017-05-10**
+
+* vajs.async() will not run require validation default
+
+
 **v1.0.1 2017-05-07**
 
 * vajs.v() custom validation can return a vajs.MapResult instance.

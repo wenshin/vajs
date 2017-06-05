@@ -2,16 +2,19 @@ const assert = require('assert');
 const vajs = require('../lib');
 
 const INVALID_MESSAGE = 'must be a number great than 5'
+const INVALID_MESSAGE2 = 'must be a number less than 10'
 
 function getValidator() {
   return vajs.async((val) => {
     return new Promise((resolve) => {
       setTimeout(() => {
         let result;
-        if (val > 5) {
+        if (val > 5 && val < 10) {
           result = new vajs.Result();
-        } else {
+        } else if (val <= 5) {
           result = new vajs.Result({isValid: false, message: INVALID_MESSAGE});
+        } else {
+          result = INVALID_MESSAGE2;
         }
         resolve(result);
       }, 5);
@@ -64,17 +67,7 @@ describe('async', function () {
   });
 
   it('async validation resolve string as invalid', function (done) {
-    const v = vajs.async((val) => {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          if (val <= 5) {
-            resolve(INVALID_MESSAGE);
-          } else {
-            resolve();
-          }
-        }, 5);
-      });
-    });
+    const v = getValidator();
 
     const validResult = v.validate(6);
     assert.ok(!validResult.isValid);
@@ -84,11 +77,11 @@ describe('async', function () {
       .promise
       .then((result) => {
         assert.ok(result.isValid);
-        v.validate(3)
+        v.validate(10)
           .promise
           .then((result) => {
             assert.ok(!result.isValid);
-            assert.equal(result.message, INVALID_MESSAGE);
+            assert.equal(result.message, INVALID_MESSAGE2);
             done();
           });
       });

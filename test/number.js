@@ -50,8 +50,8 @@ describe('Number', function () {
     for (let integer of integers) {
       let result = v.validate(integer);
       assert.ok(result.isValid, `integer input ${integer}`)
-      assert.ok(result.value === integer, `${integer} strict equal to ${result.value}`)
-      assert.ok(result.transformed === Number(integer), `${integer} strict equal to ${result.value}`)
+      assert.ok(result.value === integer, `value ${typeof result.value} ${result.value} strict equal to ${integer}`)
+      assert.ok(result.transformed === Number(integer), `transformed ${typeof result.transformed} ${result.transformed} strict equal to ${integer}`)
     }
 
     for (let float of floats) {

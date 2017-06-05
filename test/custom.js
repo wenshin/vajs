@@ -47,8 +47,46 @@ describe('vajs.v() custom validation', function () {
       }
     });
     let result = v.validate(true, {test: false});
-    assert.equal(result.message, 'this message');
     assert.ok(!result.isValid);
+    assert.equal(result.message, 'this message');
+  });
+
+  it('validate return a string as fail', function () {
+    let v = vajs.v(function validate() {
+      return 'fail';
+    });
+    let result = v.validate(true);
+
+    assert.equal(result.message, 'fail');
+    assert.ok(!result.isValid);
+  });
+
+  it('validate return a plain object as fail', function () {
+    let v = vajs.v(function validate() {
+      return {isValid: false, message: 'fail'};
+    });
+    let result = v.validate(true);
+
+    assert.equal(result.message, 'fail');
+    assert.ok(!result.isValid);
+  });
+
+  it('validate return a plain object as success', function () {
+    let v = vajs.v(function validate() {
+      return {isValid: true, message: 'succ'};
+    });
+    let result = v.validate(true);
+
+    assert.equal(result.message, 'succ');
+    assert.ok(result.isValid);
+
+    v = vajs.v(function validate() {
+      return {isValid: true, message: null};
+    });
+    result = v.validate(true);
+
+    assert.equal(result.message, '');
+    assert.ok(result.isValid);
   });
 
   it('validate can return a Result instance', function () {

@@ -36,7 +36,9 @@ create a validator of ValidatorQueue, which will run require validation first. I
   ]
   ```
 
-  **function config**, a function receive value and extraData two parameter. the extraData is passed by `ValidatorQueue.prototype.validate` method
+  **function config**, a function receive value and extraData two parameters.
+  the extraData is passed by `ValidatorQueue.prototype.validate` method.
+  then function can return a `vajs.Result` instance, `vajs.MapResult` instance, string, boolean and object like `{isValid, message?}`
 
 - `return`: [vajs.Validator|vajs.ValidatorQueue].
 
@@ -151,6 +153,11 @@ it has `validate` and `validateOne` api.
     $> npm publish
 
 # Release Note
+
+**v1.0.3 2017-06-05**
+
+* custom validation return value will support string, boolean and object like {isValid, message}
+
 
 **v1.0.2 2017-05-10**
 

@@ -1,12 +1,14 @@
 # vajs
 
 a common validator for javascript environment
+> vajs used Proxy it's not completely support by browsers, 
+> detail see [Proxy compatible](http://caniuse.com/#search=Proxy).
 
-## feature
 
 # Install
-
     npm i --save vajs
+vajs do not include proxy polyfill by default. you need use a polyfill your self, such as
+https://github.com/GoogleChrome/proxy-polyfill
 
 # API
 

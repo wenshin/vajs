@@ -8,7 +8,7 @@ a common validator for javascript environment
 # Install
     npm i --save vajs
 vajs do not include proxy polyfill by default. you need use a polyfill your self, such as
-https://github.com/GoogleChrome/proxy-polyfill
+https://github.com/GoogleChrome/proxy-polyfill, but this polyfil is not same to specification of ES2015
 
 # API
 

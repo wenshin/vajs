@@ -153,6 +153,11 @@ it has `validate` and `validateOne` api.
     $> npm publish
 
 # Release Note
+
+**v1.0.5 2017-06-13**
+
+* fix `vajs.regexp()` bug caused by `RegExp.prototype.test()`
+
 **v1.0.4 2017-06-08**
 
 * remove Proxy dependency

@@ -13,11 +13,18 @@ describe('regexp', function () {
     }
   });
 
-  it('should valid fail', function () {
+  it('should validate fail', function () {
     let v = vajs.regexp(/abc/);
     let result = v.validate('ab');
     assert.equal(result.message, '格式不正确');
     assert.ok(!result.isValid);
+  });
+
+  it('should validate regular expression with global flag right', function () {
+    let v = vajs.regexp(/\w+/g);
+    let result = v.validate('a');
+    result = v.validate('a');
+    assert.ok(result.isValid);
   });
 
   it('should use custom message', function () {

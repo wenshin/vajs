@@ -18,6 +18,9 @@ describe('regexp', function () {
     let result = v.validate('ab');
     assert.equal(result.message, '格式不正确');
     assert.ok(!result.isValid);
+    result = v.validate('abc');
+    assert.equal(result.message, '');
+    assert.ok(result.isValid);
   });
 
   it('should validate regular expression with global flag right', function () {

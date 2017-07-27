@@ -154,6 +154,9 @@ it has `validate` and `validateOne` api.
 
 # Release Note
 
+**v1.0.7 2017-07-27**
+* support ie >= 9
+
 **v1.0.6 2017-07-05**
 * fix `vajs.regexp()` bug
 
